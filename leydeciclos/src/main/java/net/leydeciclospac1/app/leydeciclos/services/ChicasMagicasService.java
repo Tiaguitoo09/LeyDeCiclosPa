@@ -20,7 +20,7 @@ public class ChicasMagicasService {
         return (ArrayList<ChicasMagicas>) chicasMagicasRepository.findAll();
     }
 
-    
+
     public ChicasMagicas guardarChicaMagica(ChicasMagicas chicaMagica) {
         return chicasMagicasRepository.save(chicaMagica);
     }
@@ -52,7 +52,7 @@ public class ChicasMagicasService {
         }
     }
 
-    
+
     public List<ChicasMagicas> filtrarPorEstado(String estadoActual) {
         return chicasMagicasRepository.findByEstadoActual(estadoActual);
     }

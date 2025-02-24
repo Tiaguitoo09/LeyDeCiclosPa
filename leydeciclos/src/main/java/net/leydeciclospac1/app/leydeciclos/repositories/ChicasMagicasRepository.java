@@ -12,6 +12,13 @@ public interface  ChicasMagicasRepository extends CrudRepository<ChicasMagicas, 
 
     public List<ChicasMagicas> findByEstadoActual(String estadoActual);
 
+     List<ChicasMagicas> findByName(String name);
+
+     List<ChicasMagicas> findByCiudadDeOrigen(String ciudadDeOrigen);
+ 
+     List<ChicasMagicas> findByEdadBetween(Integer minEdad, Integer maxEdad);
+ 
+     List<ChicasMagicas> findAllByOrderByFechaDeContratoAsc();
     
     
 }
