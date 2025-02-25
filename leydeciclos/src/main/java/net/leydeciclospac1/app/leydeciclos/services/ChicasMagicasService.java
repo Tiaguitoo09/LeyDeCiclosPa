@@ -17,11 +17,11 @@ public class ChicasMagicasService {
     @Autowired
     ChicasMagicasRepository chicasMagicasRepository;
 
-    private static final List<String> ESTADOS_VALIDOS = Arrays.asList("activa", "desaparecida", "rescatada por la Ley de los Ciclos");
+    private static final List<String> ESTADOS_VALIDOS_CHICAS = Arrays.asList("activa", "desaparecida", "rescatada por la Ley de los Ciclos");
 
     private void validarEstado(String estado) {
-        if (!ESTADOS_VALIDOS.contains(estado.toLowerCase())) {
-            throw new ChicasMagicasExceptions("Estado inválido. Los estados válidos son: " + ESTADOS_VALIDOS);
+        if (!ESTADOS_VALIDOS_CHICAS.contains(estado.toLowerCase())) {
+            throw new ChicasMagicasExceptions("Estado inválido. Los estados válidos son: " + ESTADOS_VALIDOS_CHICAS);
         }
     }
 

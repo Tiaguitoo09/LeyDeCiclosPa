@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,48 +19,54 @@ import org.springframework.web.bind.annotation.RestController;
 import net.leydeciclospac1.app.leydeciclos.entities.ChicasMagicas;
 import net.leydeciclospac1.app.leydeciclos.services.ChicasMagicasService;
 
-@CrossOrigin(origins = "http://localhost:8000") 
+
 @RestController
-@RequestMapping("/chicas-magicas")
+@RequestMapping("chicas-magicas")
+@CrossOrigin(origins = "*")
 public class ChicasMagicasController {
 
     @Autowired
     private ChicasMagicasService chicasMagicasService;
 
     // Obtener todas las chicas mágicas
-    @GetMapping ("/Chicas")
-    public ArrayList<ChicasMagicas> obtenerChicasMagicas() {
-        return chicasMagicasService.obtenerChicasMagicas();
+    @GetMapping
+    public ResponseEntity<ArrayList<ChicasMagicas>> obtenerChicasMagicas() {
+        return ResponseEntity.ok(chicasMagicasService.obtenerChicasMagicas());
     }
 
     // Guardar una nueva chica mágica
     @PostMapping
-    public ChicasMagicas guardarChicaMagica(@RequestBody ChicasMagicas chicaMagica) {
-        return chicasMagicasService.guardarChicaMagica(chicaMagica);
+    public ResponseEntity<ChicasMagicas> guardarChicaMagica(@RequestBody ChicasMagicas chicaMagica) {
+        return ResponseEntity.ok(chicasMagicasService.guardarChicaMagica(chicaMagica));
     }
 
     // Obtener una chica mágica por su ID
     @GetMapping("/{id}")
-    public Optional<ChicasMagicas> obtenerChicaMagicaPorId(@PathVariable Long id) {
-        return chicasMagicasService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerChicaMagicaPorId(@PathVariable Long id) {
+        Optional<ChicasMagicas> chica = chicasMagicasService.obtenerPorId(id);
+        return chica.isPresent() ? ResponseEntity.ok(chica.get()) : ResponseEntity.status(404).body("Chica mágica no encontrada");
     }
 
     // Actualizar una chica mágica
     @PutMapping("/{id}")
-    public ChicasMagicas actualizarChicaMagica(@PathVariable Long id, @RequestBody ChicasMagicas chicaMagica) {
-        return chicasMagicasService.actualizarChicaMagica(id, chicaMagica);
+    public ResponseEntity<?> actualizarChicaMagica(@PathVariable Long id, @RequestBody ChicasMagicas chicaMagica) {
+        try {
+            return ResponseEntity.ok(chicasMagicasService.actualizarChicaMagica(id, chicaMagica));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     // Eliminar una chica mágica
     @DeleteMapping("/{id}")
-    public String eliminarChicaMagica(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarChicaMagica(@PathVariable Long id) {
         boolean eliminado = chicasMagicasService.eliminarChicaMagica(id);
-        return eliminado ? "Chica mágica eliminada exitosamente" : "Error al eliminar la chica mágica";
+        return eliminado ? ResponseEntity.ok("Chica mágica eliminada exitosamente") : ResponseEntity.status(404).body("Error al eliminar la chica mágica");
     }
 
     // Filtrar chicas mágicas por estado
     @GetMapping("/estado/{estado}")
-    public ArrayList<ChicasMagicas> filtrarPorEstado(@PathVariable String estado) {
-        return (ArrayList<ChicasMagicas>) chicasMagicasService.filtrarPorEstado(estado);
+    public ResponseEntity<ArrayList<ChicasMagicas>> filtrarPorEstado(@PathVariable String estado) {
+        return ResponseEntity.ok((ArrayList<ChicasMagicas>) chicasMagicasService.filtrarPorEstado(estado));
     }
-}
+} 
