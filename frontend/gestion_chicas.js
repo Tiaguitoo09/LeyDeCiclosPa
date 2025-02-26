@@ -150,6 +150,7 @@ function mostrarFormulario() {
 function volverAlMenu() {
     document.getElementById("seccionBusqueda").classList.add("oculto");
     document.getElementById("seccionAgregar").classList.add("oculto");
+    obtenerChicasMagicas();
 }
 
 // Función para filtrar chicas mágicas por estado
