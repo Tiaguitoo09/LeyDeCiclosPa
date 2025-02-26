@@ -1,6 +1,8 @@
 package net.leydeciclospac1.app.leydeciclos.controllers;
 
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -66,7 +68,9 @@ public class ChicasMagicasController {
 
     // Filtrar chicas mágicas por estado
     @GetMapping("/estado/{estado}")
-    public ResponseEntity<ArrayList<ChicasMagicas>> filtrarPorEstado(@PathVariable String estado) {
-        return ResponseEntity.ok((ArrayList<ChicasMagicas>) chicasMagicasService.filtrarPorEstado(estado));
+    public ResponseEntity<ArrayList<ChicasMagicas>> filtrarPorEstado(@PathVariable("estado") String estado) {
+    String estadoDecodificado = URLDecoder.decode(estado, StandardCharsets.UTF_8);
+    return ResponseEntity.ok((ArrayList<ChicasMagicas>) chicasMagicasService.filtrarPorEstado(estadoDecodificado));
     }
-} 
+
+}
