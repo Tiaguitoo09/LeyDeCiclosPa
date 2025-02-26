@@ -3,20 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicas Mágicas</title>
+    <title>Ley de los Ciclos</title>
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
-    <header>
-        <h1 class="titulo">Lista de Chicas Mágicas</h1>
-    </header>
-    
-    <main>
-        <ul class="chicas-lista" id="listaChicas">
-            <!-- Los datos se llenarán con JavaScript -->
-        </ul>
-    </main>
+    <h1>Ley de los Ciclos Gestión de Chicas Mágicas</h1>
 
-    <script src="gestion_chicas.js"></script> <!-- Agrega este script -->
+    <!-- Menú principal con opciones para buscar o crear chicas mágicas -->
+    <div id="menuPrincipal">
+        <button onclick="mostrarBusqueda()">Buscar</button>
+        <button onclick="mostrarFormulario()">Crear</button>
+    </div>
+
+    <!-- Sección de búsqueda con opciones de búsqueda por ID y filtrado por estado -->
+    <div id="seccionBusqueda" class="oculto">
+        <div class="contenedor-filtros">
+            <div class="buscar-id">
+                <h2>Buscar por ID</h2>
+                <input type="text" id="buscarId" placeholder="Ingresar ID">
+                <button onclick="buscarPorId()">Buscar</button>
+            </div>
+    
+            <div class="filtrar-estado">
+                <h2>Filtrar por Estado</h2>
+                <select id="filtrarEstado" onchange="filtrarPorEstado()">
+                    <option value="">Seleccionar estado</option>
+                    <option value="Activa">Activa</option>
+                    <option value="Desaparecida">Desaparecida</option>
+                    <option value="Rescatada">Rescatada</option>
+                </select>
+                <button onclick="volverAlMenu()">Volver</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sección de formulario para crear o actualizar una chica mágica -->
+    <div id="seccionAgregar" class="oculto">
+        <h2>Crear/Actualizar Chica Mágica</h2>
+        <form id="chicaForm">
+            <input type="hidden" id="chicaId"> <!-- Campo oculto para actualizar -->
+            <input type="text" id="name" placeholder="Nombre" required>
+            <input type="number" id="edad" placeholder="Edad" required>
+            <input type="text" id="ciudadDeOrigen" placeholder="Ciudad de Origen" required>
+            <input type="text" id="estadoActual" placeholder="Estado Actual" required>
+            <input type="date" id="fechaDeContrato" required>
+            <button type="submit">Guardar</button>
+        </form>
+        <button onclick="volverAlMenu()">Volver</button>
+    </div>
+
+    <!-- Tabla para mostrar la lista de chicas mágicas registradas -->
+    <h2>Lista de Chicas Mágicas</h2>
+    <table id="chicasTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Ciudad</th>
+                <th>Estado</th>
+                <th>Edad</th>
+                <th>Fecha de Contrato</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody></tbody> <!-- Aquí se insertan dinámicamente los datos -->
+    </table>
+
+    <!-- Importación del script que maneja la lógica de la aplicación -->
+    <script src="gestion_chicas.js"></script>
 </body>
 </html>
